@@ -1,0 +1,192 @@
+---
+- tables:
+    - studios:
+        description: A table to store "studios", photographers, etc... the entities who ultimately hire us.
+        engine: InnoDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - name:
+                columnType: TEXT
+                nullable: false
+                description: The name of the actual business
+            - payment_system_id:
+                columnType: TEXT
+                nullable: true
+                comment: >
+                    It is assumed that payments will be handled by an separate PCI system, so this is a placeholder for
+                    the matching key to that system.
+            - shipping_address:
+                columnType: TEXT
+                nullable: false
+                comment: >
+                    International shipping addresses have so many forms that for now it is simpler to have a free form
+                    field to let UPS/FedEx APIs sort out the details. This technique works well for sites like
+                    postcrossing.com.  Addresses are needed to send studios both swag and subpoenas.
+        primaryKey: id
+        indexes:
+            - name
+    - users:
+        description: A table to store authorized users, who are later paired to each studio
+        engine: InnoDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - name:
+                columnType: TEXT
+                nullable: false
+                comment: The name of the actual person or role logging into the system
+            - username:
+                columnType: CHAR(36) UNIQUE
+                nullable: false
+            - password_hash:
+                columnType: TEXT
+                nullable: false
+            - email:
+                columnType: TEXT 
+                nullable: false
+            - phone:
+                columnType: TEXT
+                nullable: true
+                comment: >
+                    Phone number in full internationalized format. Not required as
+                    people without hearing may be users
+        primaryKey: id
+        indexes:
+          - name
+          - username
+    - user_studio_associations:
+        description: >
+            Links users and studios. A studio can have more than one user (staff members) and a user can be associated
+            with more than one studio (a freelance photographer).
+        engine: InnoDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - studio_id:
+                columnType: CHAR(36)
+                nullale: false
+                foreignKey:
+                    name: user_studio_associations_studio
+                    references: studios(id)
+            - user_id:
+                columnType: CHAR(36)
+                nullable: false
+                foreignKey:
+                    name: user_studio_associations_user
+                    references: users(id)
+        primaryKey: id
+        indexes:
+          - user_id
+          - studio_id
+    - containers:
+        description: >
+            Containers are any number of photo organizing units that can be nested within each other. Users might
+            invent many ways of naming the taxonomies, so we try to plan for future flexibility. This table also
+            establishes the ownership of a container to a studio
+        engine: TokuDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - studio_id:
+                columnType: CHAR(36)
+                nullable: false
+                foreignKey:
+                    name: container_studio
+                    references: studios(id)
+            - parent_id:
+                columnType: CHAR(36)
+                nullable: true
+                comment: Top most level will not have a parent_id
+            - container_type:
+                columnType: ENUM('gallery', 'album', 'shelf', 'event', 'shoot', 'class')
+                nullable: false
+                comment: >
+                    In the future, may be converted to another field type if the number of types gets large or users
+                    can make their own types on the fly; but, we might display different container types differently,
+                    so this field can be used to differentiate that handling.
+            - display_order:
+                columnType: MEDIUMINT UNSIGNED
+                nullable: true
+                comment: >
+                    Designate the order in which containers appear. Allows containers to
+                    optionally be displayed in non-date order.
+        primaryKey: id
+        indexes:
+            - studio_id
+            - parent_id
+            - display_order
+    - photos:
+        description: This table indexes the individual images.
+        engine: TokuDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - studio_id:
+                columnType: CHAR(36)
+                nullable: false
+                foreignKey:
+                    name: container_studio
+                    references: studios(id)
+            - storage_url:
+                columnType: TEXT
+                nullable: false
+                comment: Indicates where the system should find the image data in storage. S3, SAN, etc.
+            - original_filename:
+                columnType: TEXT
+                nullable: true
+                comment: >
+                    If a user saves a file from our system, it can still have the original name, though internally
+                    we would want to avoid using the user-provided names so we don't have collisions, even from the
+                    same user.
+            - image_timestamp:
+                columnType: DATETIME
+                nullable: true
+                comment: >
+                    We're probably going to want to sort by the time the photo is taken, even if the user renamed
+                    the image files; but, not every camera gives EXIF data, so this could be null
+            - pixels_x:
+                columnType: MEDIUMINT UNSIGNED
+                nullable: false
+                comment: Number of pixels across. Probably will be handy in making layouts. Faster than accessing file.
+            - pixels_y:
+                columnType: MEDIUMINT UNSIGNED
+                nullable: false
+                comment: Number of pixels tall. Probably will be handy in making layouts. Faster than accessing file.
+        primaryKey: id
+        indexes:
+          - studio_id
+          - image_timestamp
+    - photo_container_associations:
+        description: This table puts photos into containers. A photo may be in more than one container.
+        engine: TokuDB
+        columns:
+            - id:
+                columnType: CHAR(36)
+                nullable: false
+            - photo_id:
+                columnType: CHAR(36)
+                nullable: false
+                foreignKey:
+                  name: photo_association
+                  references: photos(id)
+            - container_id:
+                columnType: CHAR(36)
+                nullable: false
+                foreignKey:
+                  name: container_association
+                  references: containers(id)
+            - display_order:
+                columnType: MEDIUMINT UNSIGNED
+                nullable: true
+                comment: Designate the order in which the photo should appear in the container.
+        primaryKey: id
+        indexes:
+          - container_id
+          - photo_id
+          - display_order
