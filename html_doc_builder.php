@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 require "vendor/autoload.php";
 
 include "header.html";
@@ -6,12 +7,6 @@ include "header.html";
 use Symfony\Component\Yaml\Yaml;
 
 $schema = Yaml::parseFile('schema.yaml');
-
-/*
-var_dump($schema['tables']);
-
-die();
-*/
 
 foreach ($schema['tables'] as $tableName => $table) {
     echo "<a name='" . htmlentities($tableName) ."'></a>" . PHP_EOL;
