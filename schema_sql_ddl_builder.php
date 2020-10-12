@@ -7,7 +7,7 @@ $schema = Yaml::parseFile('schema.yaml')[0];
 //var_dump($schema['tables']);
 //echo sizeof($schema['tables']);
 
-foreach ($schema['tables'] as $entry ) {
+foreach ($schema['tables'] as $entry) {
     foreach ($entry as $tableName => $tableInfo) {
         echo "CREATE TABLE {$tableName} (" . PHP_EOL;
 
