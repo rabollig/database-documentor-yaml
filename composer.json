@@ -4,6 +4,7 @@
         "nette/neon": "^3.2"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.48"
+        "phpstan/phpstan": "^0.12.48",
+        "phpmd/phpmd": "^2.9"
     }
 }
