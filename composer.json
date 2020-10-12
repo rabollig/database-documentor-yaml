@@ -1,5 +1,6 @@
 {
     "require": {
-        "symfony/yaml": "^4.3"
+        "mustangostang/spyc": "^0.6.3",
+        "nette/neon": "^3.2"
     }
 }
