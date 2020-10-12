@@ -7,6 +7,10 @@ require_once "vendor/autoload.php";
 require_once "config.php";
 require_once "database.inc.php";
 
+if (!isset($database)) {
+    die('I need access to the database to scan it, but cannot stat');
+}
+
 $tables = $database->prepare("SHOW TABLE STATUS");
 $tables->execute();
 
