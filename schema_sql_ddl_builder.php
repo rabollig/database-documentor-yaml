@@ -73,6 +73,6 @@ foreach ($schema['tables'] as $entry) {
 }
 
 
-echo "-- Produced by Code Knights YAML Schema Document Breator, v0.9.12 " . date("Y-m-d");
+echo "-- Produced by Code Knights YAML Schema Document Creator, v0.9.12 " . date("Y-m-d");
 echo PHP_EOL;
 echo PHP_EOL;
