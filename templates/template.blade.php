@@ -21,6 +21,9 @@
 
         @foreach($schema['tables'] as $tableName => $table)
             <h2 id="{{ $tableName }}">{{ $tableName }}</h2>
+            Rows: {{ $table['rows'] }} <br />
+            Size: {{ $table['bytes'] }} bytes <br /><br />
+
             <table>
             <tr>
                 <td class='heading'>Name</td>
@@ -62,6 +65,9 @@
             color: #333333;
         }
 
+        h1, h2 {
+            margin-top: 2em;
+        }
         table {
             border-collapse: collapse;
         }
