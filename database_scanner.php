@@ -17,7 +17,7 @@ $tables= $tables->fetchAll();
 foreach ($tables as $table) {
     $outputTable = [];
     $outputTable['rows']  = (int)$table['Rows'];
-    $outputTable['bytes'] = (int)$table['Rows'] * $table['Avg_row_length'];
+    $outputTable['bytes'] = (int)$table['Data_length'];
     $outputTable['comment'] = $table['Comment'];
 
     $columns = $database->prepare("
