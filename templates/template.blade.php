@@ -22,10 +22,10 @@
             <h2 id="{{ $tableName }}">{{ $tableName }}</h2>
             <table>
             <tr>
-            <td class='heading'>Name</td>
-            <td class='heading'>Type</td>
-            <td class='heading'>Nullable</td>
-            <td class='heading'>Comment</td>
+                <td class='heading'>Name</td>
+                <td class='heading'>Type</td>
+                <td class='heading'>Nullable</td>
+                <td class='heading'>Comment</td>
             </tr>
             @foreach($table['columns'] as $columnName => $columnAttributes)
                     <tr>
