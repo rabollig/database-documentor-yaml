@@ -18,6 +18,7 @@ foreach ($tables as $table) {
     $outputTable = [];
     $outputTable['rows']  = (int)$table['Rows'];
     $outputTable['bytes'] = (int)$table['Rows'] * $table['Avg_row_length'];
+    $outputTable['comment'] = $table['Comment'];
 
     $columns = $database->prepare("
         DESCRIBE {$table['Name']} -- :tablename

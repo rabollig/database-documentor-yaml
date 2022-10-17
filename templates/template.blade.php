@@ -24,6 +24,10 @@
             Rows: {{ $table['rows'] }} <br />
             Size: {{ $table['bytes'] }} bytes <br /><br />
 
+            @if($table['comment'])
+                <p>{{ $table['comment'] }}</p>
+            @endif
+
             <table>
             <tr>
                 <td class='heading'>Name</td>
