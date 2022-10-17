@@ -9,7 +9,7 @@
     <body>
         <h1>Database Documentation</h1>
         <div class="index">
-            @foreach($schema['tables'] as $tableName =>$table)
+            @foreach($schema['tables'] as $tableName => $table)
                 <a href="#{{ $tableName }}">{{ $tableName }}</a> <br />
             @endforeach
         </div>
@@ -19,7 +19,7 @@
             <b>No tables. This space intentionally left blank.</b>
         @endif
 
-        @foreach($schema['tables'] as $tableName =>$table)
+        @foreach($schema['tables'] as $tableName => $table)
             <h2 id="{{ $tableName }}">{{ $tableName }}</h2>
             <table>
             <tr>
