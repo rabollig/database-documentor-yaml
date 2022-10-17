@@ -1,10 +1,10 @@
 {
     "require": {
         "mustangostang/spyc": "^0.6.3",
-        "nette/neon": "^3.2"
+        "nette/neon": "^3.2",
+        "phpmd/phpmd": "^2.13"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.48",
-        "phpmd/phpmd": "^2.9"
+        "phpstan/phpstan": "^0.12.48"
     }
 }
