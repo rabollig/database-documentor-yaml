@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 $schema = Yaml::parseFile('schema.yaml');
 
 foreach ($schema['tables'] as $tableName => $table) {
-    echo "<a name='" . htmlentities($tableName) ."'></a>" . PHP_EOL;
+    echo "<a id='" . htmlentities($tableName) ."'></a>" . PHP_EOL;
     echo "<h1>" . htmlentities($tableName) . "</h1>" . PHP_EOL;
 
     echo "<p>" . htmlentities($table['description'] ?? '') . "</p>" . PHP_EOL;
