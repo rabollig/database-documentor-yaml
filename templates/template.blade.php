@@ -8,10 +8,11 @@
     </head>
     <body>
         <h1>Database Documentation</h1>
-
-        @foreach($schema['tables'] as $tableName =>$table)
-            <a href="#{{ $tableName }}">{{ $tableName }}</a> <br />
-        @endforeach
+        <div class="index">
+            @foreach($schema['tables'] as $tableName =>$table)
+                <a href="#{{ $tableName }}">{{ $tableName }}</a> <br />
+            @endforeach
+        </div>
 
         <h1>Tables</h1>
         @if(empty($schema['tables']))
@@ -72,6 +73,9 @@
 
         .heading {
             font-weight: bold;
+        }
+        .index {
+            column-width: 20em;
         }
     </style>
 
