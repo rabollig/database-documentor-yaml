@@ -12,7 +12,7 @@ temp/*
 /public/hot
 /public/storage
 /cache/
-
+templates/cache/
 
 
 # IDE
