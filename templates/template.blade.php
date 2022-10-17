@@ -25,6 +25,9 @@
                 <td class='heading'>Name</td>
                 <td class='heading'>Type</td>
                 <td class='heading'>Nullable</td>
+                <td class='heading'>Key</td>
+                <td class='heading'>Default</td>
+                <td class='heading'>Extra</td>
                 <td class='heading'>Comment</td>
             </tr>
             @foreach($table['columns'] as $columnName => $columnAttributes)
@@ -32,6 +35,9 @@
                         <td>{{ $columnName }}</td>
                         <td>{{ $columnAttributes['type'] ?? '' }}</td>
                         <td>{{ $columnAttributes['nullable'] ?? '' }} </td>
+                        <td>{{ $columnAttributes['key'] ?? '' }} </td>
+                        <td>{{ (string)$columnAttributes['default'] ?? '' }} </td>
+                        <td>{{ $columnAttributes['extra'] ?? '' }} </td>
                         <td>{{ $columnAttributes['comment'] ?? '' }}</td>
                     </tr>
             @endforeach

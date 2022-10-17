@@ -1,7 +1,5 @@
 <?php
 declare(strict_types = 1);
-use Symfony\Component\Yaml\Yaml;
-use Nette\Neon\Neon;
 
 require_once "vendor/autoload.php";
 require_once "config.php";
@@ -31,6 +29,10 @@ foreach ($tables as $table) {
         $thisColumn = [];
         $thisColumn['type'] = $column ['Type'];
         $thisColumn['nullable'] = $column['Null'];
+        $thisColumn['key'] = $column['Key'];
+        $thisColumn['default'] = $column['Default'];
+        $thisColumn['extra'] = $column['Extra'];
+
 
         $tableColumns[$column['Field']] = $thisColumn;
     }
@@ -42,4 +44,4 @@ foreach ($tables as $table) {
 $output = new stdClass;
 $output->tables = $outputTables;
 
-echo Spyc::YAMLDump($output);
+echo yaml_emit($output);
