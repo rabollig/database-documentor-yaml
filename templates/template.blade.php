@@ -24,6 +24,16 @@
             Rows: {{ $table['rows'] }} <br />
             Size: {{ $table['bytes'] }} bytes <br />
 
+            @if(!empty($table['triggers']))
+                Triggers:
+                @foreach($table['triggers'] as $triggerEvent => $statement)
+                    <a href="#{{ $tableName }}.trigger.{{ $triggerEvent }}">
+                        {{ $triggerEvent }}
+                    </a> &nbsp;&nbsp;
+                @endforeach
+                    <br />
+            @endif
+
             @if(!empty($table['comment']))
                 <p><i>{{ $table['comment'] }}</i></p>
             @endif
@@ -61,6 +71,18 @@
                     </tr>
             @endforeach
             </table>
+
+            @if(!empty($table['triggers']))
+                <h3>Triggers:</h3>
+                @foreach($table['triggers'] as $triggerEvent => $statement)
+                    <h4 id="#{{ $tableName }}.trigger.{{ $triggerEvent }}">
+                        ON {{ $triggerEvent }}
+                    </h4>
+                    <pre>{{ $statement }}</pre>
+                @endforeach
+                <br />
+            @endif
+
         @endforeach
 
         <h1>Views</h1>

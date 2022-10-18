@@ -23,7 +23,6 @@ $foreignKeysQuery->bindValue('databaseName', DB_NAME);
 $foreignKeysQuery->execute();
 $foreignKeysQueryResults = $foreignKeysQuery->fetchAll();
 
-
 $keyConstraints = [];
 foreach ($foreignKeysQueryResults as $constraint) {
     $keyConstraints[
@@ -31,6 +30,16 @@ foreach ($foreignKeysQueryResults as $constraint) {
     ] = $constraint['REFERENCED_TABLE_NAME'] . '.' . $constraint['REFERENCED_COLUMN_NAME'];
 }
 
+// Get trigger information
+$triggerQuery = $database->prepare("SHOW TRIGGERS;");
+$triggerQuery->execute();
+$triggerQueryResults = $triggerQuery->fetchAll();
+$triggers = [];
+foreach ($triggerQueryResults as $trigger) {
+    $triggers[$trigger['Table']][$trigger['Event']] = $trigger['Statement'];
+}
+
+// Scan tables
 $outputTables = [];
 $tables= $tables->fetchAll();
 foreach ($tables as $table) {
@@ -64,13 +73,16 @@ foreach ($tables as $table) {
         $tableColumns[$column['Field']] = $thisColumn;
     }
 
+    // Add triggers, if any
+    if (!empty($triggers[$table['Name']])) {
+        $outputTable['triggers'] = $triggers[$table['Name']];
+    }
+
     $outputTable['columns'] = (array)$tableColumns;
     $outputTables[$table['Name']] = (array)$outputTable;
-
 }
 
 $output = [];
 $output['tables'] = $outputTables;
 
 echo yaml_emit($output);
-
