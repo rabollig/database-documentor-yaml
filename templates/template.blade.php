@@ -100,6 +100,9 @@
         h1 {
             color: #333333;
         }
+        a {
+            text-decoration: none;
+        }
         @media (prefers-color-scheme: dark) {
             body, h1 {
                 background-color: #222;
