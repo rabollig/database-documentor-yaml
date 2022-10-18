@@ -75,9 +75,17 @@
             font-family: Roboto, sans-serif;
             margin: 2em;
         }
-
         h1 {
             color: #333333;
+        }
+        @media (prefers-color-scheme: dark) {
+            body, h1 {
+                background-color: #222;
+                color: #aaa;
+            }
+            a {
+                color: #ffffff;
+            }
         }
 
         h1, h2 {
