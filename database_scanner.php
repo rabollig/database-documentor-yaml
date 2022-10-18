@@ -39,8 +39,12 @@ foreach ($tables as $table) {
     $outputTable['bytes'] = (int)$table['Data_length'];
     $outputTable['comment'] = $table['Comment'];
 
+    // Binding doesn't work for DESCRIBE for some reason, however, it's
+    // unlikely someone named a table in the database to be a SQL Injection,
+    // and if a bad actor can do that, you have bigger problems than a
+    // lack of documentation. Still feels icky, though.
     $columns = $database->prepare("
-        DESCRIBE {$table['Name']} -- :tablename
+        DESCRIBE `{$table['Name']}` -- :tablename
     ");
     $columns->execute();
     $columns = $columns->fetchAll();
