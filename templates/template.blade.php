@@ -46,7 +46,18 @@
                         <td>{{ $columnAttributes['key'] ?? '' }} </td>
                         <td>{{ (string)$columnAttributes['default'] ?? '' }} </td>
                         <td>{{ $columnAttributes['extra'] ?? '' }} </td>
-                        <td>{{ $columnAttributes['comment'] ?? '' }}</td>
+                        <td>
+                            @if(!empty($columnAttributes['comment']))
+                                {{ $columnAttributes['comment'] }}<br /><br />
+                            @endif
+                            @if(!empty($columnAttributes['foreignKeyConstraint']))
+                                Foreign Key Constraint:
+                                    <a href="#{{ $columnAttributes['foreignKeyConstraint'] }}">
+                                        {{ $columnAttributes['foreignKeyConstraint'] }}
+                                    </a>
+                                    <br /><br />
+                            @endif
+                        </td>
                     </tr>
             @endforeach
             </table>
