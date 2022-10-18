@@ -22,10 +22,10 @@
         @foreach($schema['tables'] as $tableName => $table)
             <h2 id="{{ $tableName }}">{{ $tableName }}</h2>
             Rows: {{ $table['rows'] }} <br />
-            Size: {{ $table['bytes'] }} bytes <br /><br />
+            Size: {{ $table['bytes'] }} bytes <br />
 
-            @if($table['comment'])
-                <p>{{ $table['comment'] }}</p>
+            @if(!empty($table['comment']))
+                <p><i>{{ $table['comment'] }}</i></p>
             @endif
 
             <table>
@@ -40,7 +40,7 @@
             </tr>
             @foreach($table['columns'] as $columnName => $columnAttributes)
                     <tr>
-                        <td>{{ $columnName }}</td>
+                        <td id="{{ $tableName . '.' . $columnName }}">{{ $columnName }}</td>
                         <td>{{ $columnAttributes['type'] ?? '' }}</td>
                         <td>{{ $columnAttributes['nullable'] ?? '' }} </td>
                         <td>{{ $columnAttributes['key'] ?? '' }} </td>
