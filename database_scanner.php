@@ -141,4 +141,4 @@ foreach ($tables as $table) {
 $output = [];
 $output['tables'] = $outputTables;
 
-echo yaml_emit($output);
+file_put_contents($config['files']['schema_file'], yaml_emit($output));
