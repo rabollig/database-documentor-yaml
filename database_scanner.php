@@ -90,7 +90,7 @@ $tables= $tables->fetchAll();
 foreach ($tables as $table) {
     $outputTable = [];
     $outputTable['rows']  = (int)$table['Rows'];
-    $outputTable['bytes'] = (int)$table['Data_length'];
+    $outputTable['bytes'] = (int)$table['Avg_row_length'] * (int)$table['Rows'];
     $outputTable['comment'] = $table['Comment'];
     $outputTable['type'] = $tableType[$table['Name']];
     $outputTable['description'] = $previousSchema['tables'][$table['Name']]['description'] ?? '';
@@ -146,11 +146,14 @@ foreach ($tables as $table) {
                 $sampleQueryResults = $sampleQuery->fetchAll();
 
                 foreach ($sampleQueryResults as $sampleQueryResult) {
-                    $samples[] = [
-                        'value' => $sampleQueryResult['value'],
-                        'qty' => $sampleQueryResult['qty'],
-                        'percentage' => round($sampleQueryResult['qty'] / $table['Rows'] *100, 2)
-                    ];
+                    // Skip if it's just a number
+                    if (!is_numeric($sampleQueryResult['value'])) {
+                        $samples[] = [
+                            'value' => $sampleQueryResult['value'],
+                            'qty' => $sampleQueryResult['qty'],
+                            'percentage' => round($sampleQueryResult['qty'] / $table['Rows'] *100, 2)
+                        ];
+                    }
                 }
 
                 $thisColumn['samples'] = $samples;
