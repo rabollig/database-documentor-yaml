@@ -179,17 +179,19 @@
             @endif
 
             @if(!empty($table['viewCreateQuery']))
-                <p><pre>{{ $table['viewCreateQuery'] }}</pre></p>
+                <p class="controlled_width"><code>{{ $table['viewCreateQuery'] }}</code></p>
             @endif
 
+            <div class="controlled_width">
+                @if(!empty($table['comment']))
+                    <p><i>{{ $table['comment'] }}</i></p>
+                @endif
 
-            @if(!empty($table['comment']))
-                <p><i>{{ $table['comment'] }}</i></p>
-            @endif
+                @if(!empty($table['description']))
+                    <p><i>{{ $table['description'] }}</i></p>
+                @endif
 
-            @if(!empty($table['description']))
-                <p><i>{{ $table['description'] }}</i></p>
-            @endif
+            </div>
 
             <table>
             <tr>
@@ -304,6 +306,10 @@
 
         .align_right {
             text-align: right;
+        }
+
+        .controlled_width {
+            max-width: 60em;
         }
         .heading {
             font-weight: bold;
