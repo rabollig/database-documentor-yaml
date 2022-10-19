@@ -1,0 +1,18 @@
+
+[database]
+database_host = localhost
+database_user = root
+database_password = example
+database_name = test
+
+[document]
+; This is the title that appears the top of your schema document
+title = My Database Schema
+
+[files]
+; This is the intermediate file that the scanner generates. You can add
+; descriptions to this file and the html_doc_builder will see them.
+; This file gets updated by the database_scanner the next time you run it.
+schema_file = schema.yaml
+; This is the final HTML output file name
+document_file = schema.html

@@ -6,7 +6,7 @@ schema documentation.
 
 ## Quickstart
 
-- Copy `config.php.example` to `config.php` and update with a read-only database user
+- Copy `config.ini.example` to `config.ini` and update with a read-only database user
 - Scan your database to create a YAML file using `php database_scanner.php > schema.yaml`
 - Compile the YAML file to HTML documentation with `php html_doc_builder.php > doc.html`
 

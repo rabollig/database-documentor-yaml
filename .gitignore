@@ -1,5 +1,6 @@
 # Environment
 .env
+config.ini
 config.php
 /storage/*.key
 
