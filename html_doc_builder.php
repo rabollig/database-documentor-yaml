@@ -23,4 +23,4 @@ $output = $blade->render(
     ]
 );
 
-echo $output;
+file_put_contents($config['files']['document_file'], $output);
