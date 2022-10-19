@@ -4,12 +4,14 @@ use Symfony\Component\Yaml\Yaml;
 
 require_once "vendor/autoload.php";
 
+// Get configuration
 try {
     $config = parse_ini_file('config.ini', true);
 } catch (Exception $e) {
     die("Unable to parse config file. Make sure you copied config.ini.example to config.ini and filled it in.");
 }
 
+// Connect to the database
 try {
     $database = new PDO(
         "mysql:host="
@@ -22,8 +24,6 @@ try {
 } catch (PDOException $e) {
     die("Unable to connect to the database: " . $e->getMessage());
 }
-
-
 
 if (!isset($database)) {
     die('I need access to the database to scan it, but cannot stat');
