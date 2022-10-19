@@ -16,3 +16,27 @@ title = My Database Schema
 schema_file = schema.yaml
 ; This is the final HTML output file name
 document_file = schema.html
+
+[samples]
+; Samples looks for common/popular values in each field to give
+; users an idea of the nature of the data stored.
+;
+; There are risks to using this feature, though:
+; - If a sensitive value is popular enough, it will be exposed in the document
+; - Scanning large or unindexed tables can be computationally intensive
+;
+
+; Master enable/disable switch for this feature
+enabled = false
+
+; For indexed columns, which are typically faster and more important
+; set the largest table length we should attempt as well as how common
+; a value must be to be displayed.
+max_row_length_indexed = 10000000
+top_values_indexed = 6
+
+; Same here for unindexed values. Since these will result in a table
+; scan, we recommend only performing on small tables unless you run
+; this script on a dedicated replica
+max_row_length_unindexed = 10000
+top_values_unindexed = 5

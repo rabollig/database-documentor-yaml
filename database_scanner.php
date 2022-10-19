@@ -119,6 +119,44 @@ foreach ($tables as $table) {
         if (!empty($keyConstraints[$table['Name'] . '.' . $column['Field']])) {
             $thisColumn['foreignKeyConstraint'] = $keyConstraints[$table['Name'] . '.' . $column['Field']];
         }
+
+        // Sample column values
+        $samples = [];
+        if ($config['samples']['enabled'] && $column['Key'] != 'UNI' && $table['Rows'] > 0) {
+            $sampleLimit = 0;
+            if (!empty($column['Key'])
+                && $table['Rows'] < $config['samples']['max_row_length_indexed']
+            ) {
+                $sampleLimit = $config['samples']['top_values_indexed'];
+            }
+            if (empty($column['Key'])
+                && $table['Rows'] < $config['samples']['max_row_length_unindexed']
+            ) {
+                $sampleLimit = $config['samples']['top_values_unindexed'];
+            }
+
+            if ($sampleLimit) {
+                $sampleQuery = $database->prepare("
+                    SELECT `{$column['Field']}` AS value, COUNT(*) AS qty
+                    FROM `{$table['Name']}`
+                    GROUP BY `{$column['Field']}`
+                    ORDER BY qty DESC LIMIT {$sampleLimit}
+                ");
+                $sampleQuery->execute();
+                $sampleQueryResults = $sampleQuery->fetchAll();
+
+                foreach ($sampleQueryResults as $sampleQueryResult) {
+                    $samples[] = [
+                        'value' => $sampleQueryResult['value'],
+                        'qty' => $sampleQueryResult['qty'],
+                        'percentage' => round($sampleQueryResult['qty'] / $table['Rows'] *100, 2)
+                    ];
+                }
+
+                $thisColumn['samples'] = $samples;
+            }
+        }
+
         $tableColumns[$column['Field']] = $thisColumn;
     }
 

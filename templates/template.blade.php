@@ -198,6 +198,7 @@
                 <td class='heading'>Nullable</td>
                 <td class='heading'>Key</td>
                 <td class='heading'>Default</td>
+                <td class='heading'>Samples</td>
                 <td class='heading'>Extra</td>
                 <td class='heading'>Comment</td>
             </tr>
@@ -208,6 +209,20 @@
                         <td>{{ $columnAttributes['nullable'] ?? '' }} </td>
                         <td>{{ $columnAttributes['key'] ?? '' }} </td>
                         <td>{{ (string)$columnAttributes['default'] ?? '' }} </td>
+                        <td>
+                            @if(!empty($columnAttributes['samples']))
+                                <table class="borderless">
+                                  @foreach($columnAttributes['samples'] as $sample)
+                                    <tr class="borderless">
+                                        <td class="borderless">{{ $sample['value'] }}</td>
+                                        <td class="borderless align_right">{{ $sample['qty'] }}</td>
+                                        <td class="borderless align_right">{{ $sample['percentage'] }}%</td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            @endif
+                        </td>
+
                         <td>{{ $columnAttributes['extra'] ?? '' }} </td>
                         <td>
                             @if(!empty($columnAttributes['comment']))
@@ -283,6 +298,13 @@
             padding: 0.5rem;
         }
 
+         .borderless {
+             border: none;
+         }
+
+        .align_right {
+            text-align: right;
+        }
         .heading {
             font-weight: bold;
         }
