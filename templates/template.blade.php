@@ -297,6 +297,8 @@
 
          .borderless {
              border: none;
+             padding: 0.1em;
+             padding-right: 1em;
          }
 
         .align_right {
