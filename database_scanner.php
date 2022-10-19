@@ -93,6 +93,7 @@ foreach ($tables as $table) {
     $outputTable['bytes'] = (int)$table['Data_length'];
     $outputTable['comment'] = $table['Comment'];
     $outputTable['type'] = $tableType[$table['Name']];
+    $outputTable['description'] = $previousSchema['tables'][$table['Name']]['description'] ?? '';
 
     // Binding doesn't work for DESCRIBE for some reason, however, it's
     // unlikely someone named a table in the database to be a SQL Injection,
@@ -111,6 +112,8 @@ foreach ($tables as $table) {
         $thisColumn['key'] = $column['Key'];
         $thisColumn['default'] = $column['Default'];
         $thisColumn['extra'] = $column['Extra'];
+        $thisColumn['description']
+            = $previousSchema['tables'][$table['Name']]['columns'][$column['Field']]['description'] ?? '';
 
         // Add foreign key constraints, if any
         if (!empty($keyConstraints[$table['Name'] . '.' . $column['Field']])) {
