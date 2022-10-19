@@ -234,10 +234,17 @@
 
         @endforeach
 
-        <h1>Views</h1>
-        @if(empty($schema['views']))
-            <b>No views. This space intentionally left blank.</b>
+        <h1>Stored Procedures</h1>
+        @if(empty($schema['storedProcedures']))
+            <b>No stored procedures. This space intentionally left blank.</b>
         @endif
+        @if(!empty($schema['storedProcedures']))
+            @foreach($schema['storedProcedures'] as $procedure)
+                <h2>{{ $procedure['Name'] }}</h2>
+
+            @endforeach
+        @endif
+
 
     </body>
 

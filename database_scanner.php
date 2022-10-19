@@ -103,7 +103,83 @@ foreach ($tables as $table) {
     $outputTables[$table['Name']] = (array)$outputTable;
 }
 
+// Add Stored Procedures
+$storedProcedureListQuery = $database->prepare("
+    SHOW PROCEDURE STATUS WHERE db = :database
+");
+$storedProcedureListQuery->bindValue("database", DB_NAME);
+$storedProcedureListQuery->execute();
+$storedProcedureList = $storedProcedureListQuery->fetchAll();
+
+$storedProcedures = [];
+foreach ($storedProcedureList as $procedure) {
+    $storedProcedureInfoQuery = $database->prepare("
+        SHOW CREATE PROCEDURE `{$procedure['Name']}` -- :( 
+    ");
+    $storedProcedureInfoQuery->execute();
+    $storedProcedureInfo = $storedProcedureInfoQuery->fetchAll();
+/*
+
+For some reason, this isn't working. When you run the query in MySQL, it works...
+mysql> show create procedure increase_all_salaries_by_percentage\G
+*************************** 1. row ***************************
+           Procedure: increase_all_salaries_by_percentage
+            sql_mode: ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    Create Procedure: CREATE DEFINER=`root`@`localhost` PROCEDURE `increase_all_salaries_by_percentage`(
+    IN percentage DECIMAL(5,2)
+)
+BEGIN
+    UPDATE employees
+    SET salary = salary * (1 + percentage/100);
+END
+character_set_client: utf8mb4
+collation_connection: utf8mb4_0900_ai_ci
+  Database Collation: utf8mb4_0900_ai_ci
+1 row in set (0.00 sec)
+
+mysql>
+
+But when I get it back through PDO, the creation statement isn't there...
+array(1) {
+  [0]=>
+  array(12) {
+    ["Procedure"]=>
+    string(35) "increase_all_salaries_by_percentage"
+    [0]=>
+    string(35) "increase_all_salaries_by_percentage"
+    ["sql_mode"]=>
+    string(117) "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    [1]=>
+    string(117) "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    ["Create Procedure"]=>
+    NULL
+    [2]=>
+    NULL
+    ["character_set_client"]=>
+    string(7) "utf8mb4"
+    [3]=>
+    string(7) "utf8mb4"
+    ["collation_connection"]=>
+    string(18) "utf8mb4_0900_ai_ci"
+    [4]=>
+    string(18) "utf8mb4_0900_ai_ci"
+    ["Database Collation"]=>
+    string(18) "utf8mb4_0900_ai_ci"
+    [5]=>
+    string(18) "utf8mb4_0900_ai_ci"
+  }
+}
+
+
+ */
+
+
+
+    $storedProcedures[$procedure['Name']] = $storedProcedureInfo['Create Procedure'];
+}
+
 $output = [];
 $output['tables'] = $outputTables;
+$output['storedProcedures'] = $storedProcedures;
 
 echo yaml_emit($output);
