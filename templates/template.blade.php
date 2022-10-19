@@ -178,6 +178,11 @@
                     <br />
             @endif
 
+            @if(!empty($table['viewCreateQuery']))
+                <p><pre>{{ $table['viewCreateQuery'] }}</pre></p>
+            @endif
+
+
             @if(!empty($table['comment']))
                 <p><i>{{ $table['comment'] }}</i></p>
             @endif

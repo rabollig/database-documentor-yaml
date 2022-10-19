@@ -13,6 +13,16 @@ if (!isset($database)) {
 $tables = $database->prepare("SHOW TABLE STATUS");
 $tables->execute();
 
+// Get full tables (so we can get the table types)
+$tableFullStatusQuery = $database->prepare("SHOW FULL TABLES");
+$tableFullStatusQuery->execute();
+$tableFullStatusResults = $tableFullStatusQuery->fetchAll();
+
+$tableType = [];
+foreach ($tableFullStatusResults as $row) {
+    $tableType[$row[0]] = $row['Table_type'];
+}
+
 // Get information about foreign keys
 $foreignKeysQuery = $database->prepare("
     SELECT TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
@@ -47,6 +57,7 @@ foreach ($tables as $table) {
     $outputTable['rows']  = (int)$table['Rows'];
     $outputTable['bytes'] = (int)$table['Data_length'];
     $outputTable['comment'] = $table['Comment'];
+    $outputTable['type'] = $tableType[$table['Name']];
 
     // Binding doesn't work for DESCRIBE for some reason, however, it's
     // unlikely someone named a table in the database to be a SQL Injection,
@@ -76,6 +87,16 @@ foreach ($tables as $table) {
     // Add triggers, if any
     if (!empty($triggers[$table['Name']])) {
         $outputTable['triggers'] = $triggers[$table['Name']];
+    }
+
+    // If this is a view, get the creation statement (and again with the binding)
+    if ($tableType[$table['Name']] === 'VIEW') {
+        $viewCreateQuery = $database->prepare("
+            SHOW CREATE VIEW `{$table['Name']}`
+        ");
+        $viewCreateQuery->execute();
+        $viewCreateInfo = $viewCreateQuery->fetchAll();
+        $outputTable['viewCreateQuery'] = $viewCreateInfo[0]['Create View'];
     }
 
     $outputTable['columns'] = (array)$tableColumns;
