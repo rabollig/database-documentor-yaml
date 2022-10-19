@@ -260,11 +260,6 @@
 
         @endforeach
 
-        <h1>Views</h1>
-        @if(empty($schema['views']))
-            <b>No views. This space intentionally left blank.</b>
-        @endif
-
     </body>
 
     <style>
