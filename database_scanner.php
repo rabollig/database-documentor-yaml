@@ -29,6 +29,21 @@ if (!isset($database)) {
     die('I need access to the database to scan it, but cannot stat');
 }
 
+// Import existing schema.yaml file, if any, so we can reuse the description fields
+if (file_exists($config['files']['schema_file'])) {
+    try {
+        $previousSchema = Yaml::parseFile($config['files']['schema_file']);
+    } catch (Exception $e) {
+        die(
+            "I ran into problems parsing your existing schema file, "
+            . $config['files']['schema_file'] . ".  I'm stopping so I don't break anything."
+            . PHP_EOL . $e->getMessage()
+        );
+    }
+} else {
+    $previousSchema = [];
+}
+
 // Get the basic information on the tables
 $tables = $database->prepare("SHOW TABLE STATUS");
 $tables->execute();
