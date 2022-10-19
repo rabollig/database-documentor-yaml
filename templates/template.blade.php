@@ -151,7 +151,7 @@
         >
     </head>
     <body>
-        <h1>Database Documentation</h1>
+        <h1>{{ $title }}</h1>
         <div class="index">
             @foreach($schema['tables'] as $tableName => $table)
                 <a href="#{{ $tableName }}">{{ $tableName }}</a> <br />
