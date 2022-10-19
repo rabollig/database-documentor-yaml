@@ -4,6 +4,7 @@ require "vendor/autoload.php";
 
 use Jenssegers\Blade\Blade;
 use Symfony\Component\Yaml\Yaml;
+use Pharaonic\Laravel\Readable;
 
 try {
     $config = parse_ini_file('config.ini', true);
