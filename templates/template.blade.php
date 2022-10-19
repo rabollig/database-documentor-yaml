@@ -187,6 +187,10 @@
                 <p><i>{{ $table['comment'] }}</i></p>
             @endif
 
+            @if(!empty($table['description']))
+                <p><i>{{ $table['description'] }}</i></p>
+            @endif
+
             <table>
             <tr>
                 <td class='heading'>Name</td>
@@ -209,6 +213,11 @@
                             @if(!empty($columnAttributes['comment']))
                                 {{ $columnAttributes['comment'] }}<br /><br />
                             @endif
+
+                            @if(!empty($columnAttributes['description']))
+                                {{ $columnAttributes['description'] }}<br /><br />
+                            @endif
+
                             @if(!empty($columnAttributes['foreignKeyConstraint']))
                                 Foreign Key Constraint:
                                     <a href="#{{ $columnAttributes['foreignKeyConstraint'] }}">

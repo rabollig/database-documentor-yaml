@@ -29,6 +29,21 @@ if (!isset($database)) {
     die('I need access to the database to scan it, but cannot stat');
 }
 
+// Import existing schema.yaml file, if any, so we can reuse the description fields
+if (file_exists($config['files']['schema_file'])) {
+    try {
+        $previousSchema = Yaml::parseFile($config['files']['schema_file']);
+    } catch (Exception $e) {
+        die(
+            "I ran into problems parsing your existing schema file, "
+            . $config['files']['schema_file'] . ".  I'm stopping so I don't break anything."
+            . PHP_EOL . $e->getMessage()
+        );
+    }
+} else {
+    $previousSchema = [];
+}
+
 // Get the basic information on the tables
 $tables = $database->prepare("SHOW TABLE STATUS");
 $tables->execute();
@@ -78,6 +93,7 @@ foreach ($tables as $table) {
     $outputTable['bytes'] = (int)$table['Data_length'];
     $outputTable['comment'] = $table['Comment'];
     $outputTable['type'] = $tableType[$table['Name']];
+    $outputTable['description'] = $previousSchema['tables'][$table['Name']]['description'] ?? '';
 
     // Binding doesn't work for DESCRIBE for some reason, however, it's
     // unlikely someone named a table in the database to be a SQL Injection,
@@ -96,6 +112,8 @@ foreach ($tables as $table) {
         $thisColumn['key'] = $column['Key'];
         $thisColumn['default'] = $column['Default'];
         $thisColumn['extra'] = $column['Extra'];
+        $thisColumn['description']
+            = $previousSchema['tables'][$table['Name']]['columns'][$column['Field']]['description'] ?? '';
 
         // Add foreign key constraints, if any
         if (!empty($keyConstraints[$table['Name'] . '.' . $column['Field']])) {
@@ -126,4 +144,4 @@ foreach ($tables as $table) {
 $output = [];
 $output['tables'] = $outputTables;
 
-echo yaml_emit($output);
+file_put_contents($config['files']['schema_file'], yaml_emit($output));
