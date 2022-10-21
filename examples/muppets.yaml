@@ -1,0 +1,120 @@
+---
+tables:
+  characters:
+    rows: 19
+    bytes: 16378
+    comment: Characters in the Jim Henson universes
+    type: BASE TABLE
+    description: ""
+    triggers:
+      DELETE: |-
+        BEGIN
+            DELETE FROM characters_in_shows WHERE character_id = OLD.id;
+        END
+    columns:
+      id:
+        type: int unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      name:
+        type: varchar(128)
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      animal:
+        type: varchar(128)
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+  characters_in_shows:
+    rows: 23
+    bytes: 16376
+    comment: Association table between characters and shows.
+    type: BASE TABLE
+    description: ""
+    columns:
+      id:
+        type: int unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      show_id:
+        type: int unsigned
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+        foreignKeyConstraint: shows.id
+      character_id:
+        type: int unsigned
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+        foreignKeyConstraint: characters.id
+  multi_show_characters:
+    rows: 0
+    bytes: 0
+    comment: VIEW
+    type: VIEW
+    description: ""
+    viewCreateQuery: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY
+      DEFINER VIEW `multi_show_characters` AS select `characters`.`name` AS `name`,count(distinct
+      `characters_in_shows`.`show_id`) AS `COUNT(DISTINCT show_id)` from (`characters`
+      left join `characters_in_shows` on((`characters`.`id` = `characters_in_shows`.`character_id`)))
+      group by `characters`.`name` having (count(0) > 1)
+    columns:
+      name:
+        type: varchar(128)
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      COUNT(DISTINCT show_id):
+        type: bigint
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  shows:
+    rows: 4
+    bytes: 16384
+    comment: Shows produced with Henson characters
+    type: BASE TABLE
+    description: ""
+    columns:
+      id:
+        type: int unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      name:
+        type: varchar(128)
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      format:
+        type: varchar(128)
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+...
