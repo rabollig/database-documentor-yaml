@@ -95,6 +95,18 @@ foreach ($tables as $table) {
     $outputTable['type'] = $tableType[$table['Name']];
     $outputTable['description'] = $previousSchema['tables'][$table['Name']]['description'] ?? '';
 
+    // If this is a view, the number of rows will be zero in the table status info, so
+    // query the table to get the correct count.
+    if ($tableType[$table['Name']] === 'VIEW') {
+        $viewRowsQuery = $database->prepare("
+        SELECT COUNT(*) AS qty
+        FROM `{$table['Name']}`
+    ");
+        $viewRowsQuery->execute();
+        $viewRowsQueryResults = $viewRowsQuery->fetchAll();
+        $outputTable['rows']  = (int)$viewRowsQueryResults[0]['qty'];
+    }
+
     // Binding doesn't work for DESCRIBE for some reason, however, it's
     // unlikely someone named a table in the database to be a SQL Injection,
     // and if a bad actor can do that, you have bigger problems than a
