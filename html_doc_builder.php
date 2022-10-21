@@ -12,7 +12,7 @@ try {
     die("Unable to parse config file. Make sure you copied config.ini.example to config.ini and filled it in.");
 }
 
-$schema = Yaml::parseFile('schema.yaml');
+$schema = Yaml::parseFile($config['files']['schema_file']);
 
 $blade = new Blade('templates', 'templates/cache');
 
