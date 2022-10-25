@@ -7,6 +7,8 @@ builder to generate a self-contained HTML file with your documentation.
 Unlike OpenAPI, the included database scanner jumpstarts your documentation by getting most
 of the information from the database and leaving blank fields if you want to fill in more detail
 
+![Screenshot of generated documentation](src/screenshot/wordpress-readme.png)
+
 ## Features
 - Most of the work is automated with very little setup
 - Human and machine-readable files can be managed in your regular source control
