@@ -22,11 +22,7 @@ try {
     );
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Unable to connect to the database: " . $e->getMessage());
-}
-
-if (!isset($database)) {
-    die('I need access to the database to scan it, but cannot stat');
+    die("Unable to connect to the database: " . $e->getMessage() . PHP_EOL);
 }
 
 // Import existing schema.yaml file, if any, so we can reuse the description fields
