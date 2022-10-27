@@ -1,0 +1,829 @@
+---
+tables:
+  view_wp_users:
+    rows: 1
+    bytes: 0
+    comment: VIEW
+    type: VIEW
+    description: ""
+    viewCreateQuery: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY
+      DEFINER VIEW `view_wp_users` AS select `wp_users`.`ID` AS `ID`,`wp_users`.`user_login`
+      AS `user_login`,`wp_users`.`user_pass` AS `user_pass`,`wp_users`.`user_nicename`
+      AS `user_nicename`,`wp_users`.`user_email` AS `user_email`,`wp_users`.`user_url`
+      AS `user_url`,`wp_users`.`user_registered` AS `user_registered`,`wp_users`.`user_activation_key`
+      AS `user_activation_key`,`wp_users`.`user_status` AS `user_status`,`wp_users`.`display_name`
+      AS `display_name` from `wp_users`
+    columns:
+      ID:
+        type: bigint unsigned
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      user_login:
+        type: varchar(60)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_pass:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_nicename:
+        type: varchar(50)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_email:
+        type: varchar(100)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_url:
+        type: varchar(100)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_registered:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      user_activation_key:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_status:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      display_name:
+        type: varchar(250)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+  wp_commentmeta:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      meta_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      comment_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      meta_key:
+        type: varchar(255)
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+      meta_value:
+        type: longtext
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+  wp_comments:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      comment_ID:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      comment_post_ID:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      comment_author:
+        type: tinytext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      comment_author_email:
+        type: varchar(100)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      comment_author_url:
+        type: varchar(200)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      comment_author_IP:
+        type: varchar(100)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      comment_date:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      comment_date_gmt:
+        type: datetime
+        nullable: "NO"
+        key: MUL
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      comment_content:
+        type: text
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      comment_karma:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      comment_approved:
+        type: varchar(20)
+        nullable: "NO"
+        key: MUL
+        default: "1"
+        extra: ""
+        description: ""
+      comment_agent:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      comment_type:
+        type: varchar(20)
+        nullable: "NO"
+        key: ""
+        default: comment
+        extra: ""
+        description: ""
+      comment_parent:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      user_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  wp_links:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      link_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      link_url:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_name:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_image:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_target:
+        type: varchar(25)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_description:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_visible:
+        type: varchar(20)
+        nullable: "NO"
+        key: MUL
+        default: "Y"
+        extra: ""
+        description: ""
+      link_owner:
+        type: bigint unsigned
+        nullable: "NO"
+        key: ""
+        default: "1"
+        extra: ""
+        description: ""
+      link_rating:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      link_updated:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      link_rel:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      link_notes:
+        type: mediumtext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      link_rss:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+  wp_options:
+    rows: 132
+    bytes: 114576
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      option_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      option_name:
+        type: varchar(191)
+        nullable: "NO"
+        key: UNI
+        default: ""
+        extra: ""
+        description: ""
+      option_value:
+        type: longtext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      autoload:
+        type: varchar(20)
+        nullable: "NO"
+        key: MUL
+        default: "yes"
+        extra: ""
+        description: ""
+  wp_postmeta:
+    rows: 2
+    bytes: 16384
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      meta_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      post_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      meta_key:
+        type: varchar(255)
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+      meta_value:
+        type: longtext
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+  wp_posts:
+    rows: 3
+    bytes: 16383
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      ID:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      post_author:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      post_date:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      post_date_gmt:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      post_content:
+        type: longtext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      post_title:
+        type: text
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      post_excerpt:
+        type: text
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      post_status:
+        type: varchar(20)
+        nullable: "NO"
+        key: ""
+        default: publish
+        extra: ""
+        description: ""
+      comment_status:
+        type: varchar(20)
+        nullable: "NO"
+        key: ""
+        default: open
+        extra: ""
+        description: ""
+      ping_status:
+        type: varchar(20)
+        nullable: "NO"
+        key: ""
+        default: open
+        extra: ""
+        description: ""
+      post_password:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      post_name:
+        type: varchar(200)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      to_ping:
+        type: text
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      pinged:
+        type: text
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      post_modified:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      post_modified_gmt:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      post_content_filtered:
+        type: longtext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      post_parent:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      guid:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      menu_order:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      post_type:
+        type: varchar(20)
+        nullable: "NO"
+        key: MUL
+        default: post
+        extra: ""
+        description: ""
+      post_mime_type:
+        type: varchar(100)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      comment_count:
+        type: bigint
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  wp_term_relationships:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      object_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: "0"
+        extra: ""
+        description: ""
+      term_taxonomy_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: "0"
+        extra: ""
+        description: ""
+      term_order:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  wp_term_taxonomy:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      term_taxonomy_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      term_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      taxonomy:
+        type: varchar(32)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      description:
+        type: longtext
+        nullable: "NO"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+      parent:
+        type: bigint unsigned
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      count:
+        type: bigint
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  wp_termmeta:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      meta_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      term_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      meta_key:
+        type: varchar(255)
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+      meta_value:
+        type: longtext
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+  wp_terms:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      term_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      name:
+        type: varchar(200)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      slug:
+        type: varchar(200)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      term_group:
+        type: bigint
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+  wp_usermeta:
+    rows: 15
+    bytes: 16380
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      umeta_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      user_id:
+        type: bigint unsigned
+        nullable: "NO"
+        key: MUL
+        default: "0"
+        extra: ""
+        description: ""
+      meta_key:
+        type: varchar(255)
+        nullable: "YES"
+        key: MUL
+        default: ~
+        extra: ""
+        description: ""
+      meta_value:
+        type: longtext
+        nullable: "YES"
+        key: ""
+        default: ~
+        extra: ""
+        description: ""
+  wp_users:
+    rows: 0
+    bytes: 0
+    comment: ""
+    type: BASE TABLE
+    description: ""
+    columns:
+      ID:
+        type: bigint unsigned
+        nullable: "NO"
+        key: PRI
+        default: ~
+        extra: auto_increment
+        description: ""
+      user_login:
+        type: varchar(60)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      user_pass:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_nicename:
+        type: varchar(50)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      user_email:
+        type: varchar(100)
+        nullable: "NO"
+        key: MUL
+        default: ""
+        extra: ""
+        description: ""
+      user_url:
+        type: varchar(100)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_registered:
+        type: datetime
+        nullable: "NO"
+        key: ""
+        default: "0000-00-00 00:00:00"
+        extra: ""
+        description: ""
+      user_activation_key:
+        type: varchar(255)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+      user_status:
+        type: int
+        nullable: "NO"
+        key: ""
+        default: "0"
+        extra: ""
+        description: ""
+      display_name:
+        type: varchar(250)
+        nullable: "NO"
+        key: ""
+        default: ""
+        extra: ""
+        description: ""
+...
