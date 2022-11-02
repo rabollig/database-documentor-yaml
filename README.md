@@ -30,6 +30,7 @@ From a typically-equipped PHP environment:
 Need an environment? No problem, a Docker container is included.
 
 ```
+docker build -t r11g:databaes-documentor .
 docker run -it --mount type=bind,src=$(pwd),dst=/database-documentor  r11g:database-documentor /bin/bash
 cd database-documentor
 composer install
